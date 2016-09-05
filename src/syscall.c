@@ -110,7 +110,6 @@ readdir:
 			return -1;
 	}
 
-	errno = 0;
 	for (n = 0; len > 0;) {
 		struct dirent *di;
 
