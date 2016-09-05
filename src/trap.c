@@ -40,7 +40,7 @@ static Call systab[] = {
     {NULL, NULL, NULL},
     {"fork", (void (*)())sysfork, fcall0},
     {"exit", (void (*)())sysexit, fcall0},
-    {"wait", (void (*)())syswait, fcall1},
+    {"wait", (void (*)())syswait, fcall0},
     {"pipe", (void (*)())syspipe, fcall1},
     {"read", (void (*)())sysread, fcall3},
     {"kill", (void (*)())syskill, fcall1},
