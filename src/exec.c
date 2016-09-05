@@ -47,7 +47,7 @@ exec(int argc, char *argv[])
 	if (fstat(fd, &st) < 0)
 		errx(1, "fstat: %s", strerror(errno));
 
-	uint8_t *mem = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+	u8 *mem = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	if (mem == MAP_FAILED)
 		errx(1, "mmap: %s", strerror(errno));
 
