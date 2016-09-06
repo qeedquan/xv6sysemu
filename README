@@ -22,8 +22,9 @@ and a 32 bit glibc multilib.
 The 64 bit binaries must be ran under 64 bit mode.
 
 xv6 loads the program at address 0x0. Usually the OS don't 
-want you map this address because want dereference to NULL pointers 
-to fault. If you are a user, trying to mmap at this address will fail.
+want you map this address because it wants dereferences to NULL pointers 
+to cause a segfault. If you are running as a regular user, 
+trying to mmap at this address will fail.
 This can be overriden by running the command
 "sysctl vm.mmap_min_addr=0" 
 as root, or else only root can run the program.
