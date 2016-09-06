@@ -21,15 +21,14 @@ and a 32 bit glibc multilib.
 
 The 64 bit binaries must be ran under 64 bit mode.
 
-xv6 loads the program at address 0x0, so the kernel needs to be able to
-mmap at 0. Usually OS don't want you map this address because they 
-accesses to want NULL pointers to fault.
-This can be achieved by running the command
+xv6 loads the program at address 0x0. Usually the OS don't 
+want you map this address because want dereference to NULL pointers 
+to fault. If you are a user, trying to mmap at this address will fail.
+This can be overriden by running the command
 "sysctl vm.mmap_min_addr=0" 
 as root, or else only root can run the program.
 
-xv6 also loads the whole text segment and the bss segments along with data
-segment at the starting address (0x0), so mmap needs to be able to set the page
+xv6 also loads all the segments at the address 0x0, so mmap needs to be able to set the page
 readable, writable and executable. As of this moment Linux allows this, so this
 should just work.
 

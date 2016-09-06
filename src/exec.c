@@ -80,13 +80,14 @@ exec(int argc, char *argv[])
 		if (p->p_memsz < p->p_filesz)
 			errx(1, "elf: invalid executable size");
 
-		if (0xffffffffull - p->p_memsz < p->p_vaddr)
+		if (p->p_vaddr >= 0xffffffffull || p->p_memsz >= 0xffffffffull || 
+				(u64)(p->p_vaddr + PGROUNDUP(p->p_memsz)) >= 0xffffffffull)
 			errx(1, "elf: virtual address too large %lx", (ulong)p->p_vaddr);
 
 		if ((p->p_vaddr % PGSIZE) != 0)
 			errx(1, "elf: invalid virtual address %lx", (ulong)p->p_vaddr);
 
-		if (ismapped(p->p_vaddr, p->p_vaddr + p->p_offset))
+		if (ismapped(p->p_vaddr, p->p_vaddr + PGROUNDUP(p->p_memsz)))
 			errx(1, "elf: virtual address %lx has an overlapping mapping", (ulong)p->p_vaddr);
 
 		if ((off_t)p->p_offset >= st.st_size || (off_t)p->p_filesz >= st.st_size || st.st_size - p->p_filesz < p->p_offset)

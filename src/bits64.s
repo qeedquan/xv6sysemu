@@ -9,7 +9,7 @@ retuser:
 	mov rsp, rdi
 	mov rdi, rsi
 	mov rsi, rdx
-	ret
+	jmp [rsp]
 
 jumpureg:
 	push qword [rdi + 8*17]
