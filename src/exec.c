@@ -82,27 +82,27 @@ exec(int argc, char *argv[])
 
 		if (p->p_vaddr >= 0xffffffffull || p->p_memsz >= 0xffffffffull || 
 				(u64)(p->p_vaddr + PGROUNDUP(p->p_memsz)) >= 0xffffffffull)
-			errx(1, "elf: virtual address too large %lx", (ulong)p->p_vaddr);
+			errx(1, "elf: virtual address too large %llx", (uvlong)p->p_vaddr);
 
 		if ((p->p_vaddr % PGSIZE) != 0)
-			errx(1, "elf: invalid virtual address %lx", (ulong)p->p_vaddr);
+			errx(1, "elf: invalid virtual address %llx", (uvlong)p->p_vaddr);
 
 		if (ismapped(p->p_vaddr, p->p_vaddr + PGROUNDUP(p->p_memsz)))
-			errx(1, "elf: virtual address %lx has an overlapping mapping", (ulong)p->p_vaddr);
+			errx(1, "elf: virtual address %llx has an overlapping mapping", (uvlong)p->p_vaddr);
 
 		if ((off_t)p->p_offset >= st.st_size || (off_t)p->p_filesz >= st.st_size || st.st_size - p->p_filesz < p->p_offset)
 			errx(1, "elf: invalid header offsets");
 
 		void *addr = mmap((void *)p->p_vaddr, PGROUNDUP(p->p_memsz), prot, flags, -1, 0);
 		if (addr == MAP_FAILED)
-			errx(1, "mmap: failed to map virtual address %lx: %s", (ulong)p->p_vaddr, strerror(errno));
+			errx(1, "mmap: failed to map virtual address %llx: %s", (uvlong)p->p_vaddr, strerror(errno));
 
 		memmove(addr, mem + p->p_offset, p->p_filesz);
 		stack = (uintp *)PGROUNDUP(p->p_vaddr + p->p_memsz);
 	}
 
 	if (ismapped((uintptr)stack, (uintptr)stack + PGSIZE * 2))
-		errx(1, "stack address %lx has overlapping an mapping", (ulong)stack);
+		errx(1, "stack address %llx has overlapping an mapping", (uvlong)stack);
 	stack = mmap(stack, PGSIZE * 2, prot, flags, -1, 0);
 	if (stack == MAP_FAILED)
 		errx(1, "mmap: %s", strerror(errno));
