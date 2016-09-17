@@ -49,11 +49,8 @@ freefd(int fd)
 	for (int i = 0; i < f->nlist; i++)
 		free(f->namelist[i]);
 	free(f->namelist);
-	f->namelist = NULL;
-	f->nlist    = 0;
 
-	*f = fds[nfd - 1];
-	nfd--;
+	*f = fds[--nfd];
 }
 
 intp
