@@ -12,53 +12,53 @@ struct Call {
 };
 
 static intp
-fcall0(mcontext_t *m, void (*f)())
+fcall0(mcontext_t *m, void (*f)(void))
 {
 	USED(m);
 	return ((intp(*)(void))f)();
 }
 
 static intp
-fcall1(mcontext_t *m, void (*f)())
+fcall1(mcontext_t *m, void (*f)(void))
 {
 	return ((intp(*)(intp))f)(m->gregs[0]);
 }
 
 static intp
-fcall2(mcontext_t *m, void (*f)())
+fcall2(mcontext_t *m, void (*f)(void))
 {
 	return ((intp(*)(intp, intp))f)(m->gregs[0], m->gregs[1]);
 }
 
 static intp
-fcall3(mcontext_t *m, void (*f)())
+fcall3(mcontext_t *m, void (*f)(void))
 {
 	return ((intp(*)(intp, intp, intp))f)(m->gregs[0], m->gregs[1], m->gregs[2]);
 }
 
 static Call systab[] = {
     {NULL, NULL, NULL},
-    {"fork", (void (*)())sysfork, fcall0},
-    {"exit", (void (*)())sysexit, fcall0},
-    {"wait", (void (*)())syswait, fcall0},
-    {"pipe", (void (*)())syspipe, fcall1},
-    {"read", (void (*)())sysread, fcall3},
-    {"kill", (void (*)())syskill, fcall1},
-    {"exec", (void (*)())sysexec, fcall2},
-    {"fstat", (void (*)())sysfstat, fcall2},
-    {"chdir", (void (*)())syschdir, fcall1},
-    {"dup", (void (*)())sysdup, fcall1},
-    {"getpid", (void (*)())sysgetpid, fcall0},
-    {"sbrk", (void (*)())syssbrk, fcall1},
-    {"sleep", (void (*)())syssleep, fcall1},
-    {"uptime", (void (*)())sysuptime, fcall0},
-    {"open", (void (*)())sysopen, fcall2},
-    {"write", (void (*)())syswrite, fcall3},
-    {"mknod", (void (*)())sysmknod, fcall3},
-    {"unlink", (void (*)())sysunlink, fcall1},
-    {"link", (void (*)())syslink, fcall2},
-    {"mkdir", (void (*)())sysmkdir, fcall1},
-    {"close", (void (*)())sysclose, fcall1},
+    {"fork", (void (*)(void))sysfork, fcall0},
+    {"exit", (void (*)(void))sysexit, fcall0},
+    {"wait", (void (*)(void))syswait, fcall0},
+    {"pipe", (void (*)(void))syspipe, fcall1},
+    {"read", (void (*)(void))sysread, fcall3},
+    {"kill", (void (*)(void))syskill, fcall1},
+    {"exec", (void (*)(void))sysexec, fcall2},
+    {"fstat", (void (*)(void))sysfstat, fcall2},
+    {"chdir", (void (*)(void))syschdir, fcall1},
+    {"dup", (void (*)(void))sysdup, fcall1},
+    {"getpid", (void (*)(void))sysgetpid, fcall0},
+    {"sbrk", (void (*)(void))syssbrk, fcall1},
+    {"sleep", (void (*)(void))syssleep, fcall1},
+    {"uptime", (void (*)(void))sysuptime, fcall0},
+    {"open", (void (*)(void))sysopen, fcall2},
+    {"write", (void (*)(void))syswrite, fcall3},
+    {"mknod", (void (*)(void))sysmknod, fcall3},
+    {"unlink", (void (*)(void))sysunlink, fcall1},
+    {"link", (void (*)(void))syslink, fcall2},
+    {"mkdir", (void (*)(void))sysmkdir, fcall1},
+    {"close", (void (*)(void))sysclose, fcall1},
 };
 
 static void

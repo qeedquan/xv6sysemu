@@ -102,7 +102,7 @@ exec(int argc, char *argv[])
 	}
 
 	if (ismapped((uintptr)stack, (uintptr)stack + PGSIZE * 2))
-		errx(1, "stack address %llx has overlapping an mapping", (uvlong)stack);
+		errx(1, "stack address %p has overlapping an mapping", (void*)stack);
 	stack = mmap(stack, PGSIZE * 2, prot, flags, -1, 0);
 	if (stack == MAP_FAILED)
 		errx(1, "mmap: %s", strerror(errno));
